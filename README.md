@@ -21,9 +21,9 @@ The work was deployed and tested on **MOBY**, a compact indoor mobile robot prot
 
 <table>
 <tr>
-<td><img src="docs/moby_front.jpg" width="250" alt="MOBY Front View"/></td>
-<td><img src="docs/moby_back.jpg" width="250" alt="MOBY Back View"/></td>
-<td><img src="docs/moby_side.jpg" width="250" alt="MOBY Side View"/></td>
+<td><img src="docs/robot/MOBY_front.jpg" width="250" alt="MOBY Front View"/></td>
+<td><img src="docs/robot/MOBY_back.jpg" width="250" alt="MOBY Back View"/></td>
+<td><img src="docs/robot/MOBY_side.jpg" width="250" alt="MOBY Side View"/></td>
 </tr>
 <tr><td align="center">Front</td><td align="center">Back</td><td align="center">Side</td></tr>
 </table>
@@ -90,7 +90,9 @@ The pipeline comprises four sequential stages. Data flows from raw sensor input 
 
 ## System Architecture — Data Flow
 
-<img src="docs/pipeline_dataflow.png" alt="Data flow diagram (Figure 5.1)" width="600"/>
+<img src="docs/architecture/Pipeline.png" alt="System pipeline overview" width="700"/>
+
+<img src="docs/architecture/DataFlow.drawio.png" alt="Data flow diagram (Figure 5.1)" width="700"/>
 
 > *Figure 5.1 (thesis): complete ROS 2 node graph showing all topics between the RGB-D camera, 2D/3D detection nodes, object tracking node, interaction monitoring node, BT executor, LLM interaction node, and motor controller.*
 
@@ -126,7 +128,20 @@ The `ultralytics_ros` package runs **YOLOv8n** (3.2 M parameters) at **11–12 H
 
 The large gap between MOT17 and MOBY results is expected: the indoor hospital-like setting offers consistent lighting, fixed camera height (197 mm), and fewer occlusions.
 
-<img src="docs/detection_samples.jpg" alt="Sample frames from the custom MOBY dataset (Figures 4.3–4.4)" width="600"/>
+<table>
+<tr>
+<td><img src="docs/dataset/Moby_dataset_1.png" width="180"/></td>
+<td><img src="docs/dataset/Moby_dataset_2.png" width="180"/></td>
+<td><img src="docs/dataset/Moby_dataset_3.png" width="180"/></td>
+<td><img src="docs/dataset/Moby_dataset_4.png" width="180"/></td>
+</tr>
+<tr>
+<td><img src="docs/dataset/Moby_dataset_5.png" width="180"/></td>
+<td><img src="docs/dataset/Moby_dataset_6.png" width="180"/></td>
+<td><img src="docs/dataset/Moby_dataset_7.png" width="180"/></td>
+<td><img src="docs/dataset/Moby_dataset_8.png" width="180"/></td>
+</tr>
+</table>
 
 > *Figures 4.3–4.4 (thesis): representative frames from the 312-frame custom MOBY dataset recorded onboard the robot in an indoor office lobby.*
 
@@ -149,7 +164,7 @@ Key DeepSORT parameters (`params.yaml`): `max_dist=0.4`, `max_age=30 frames`, `n
 
 ## Stage 2 — Trajectory Monitoring (`trajectory_watcher`)
 
-<img src="docs/trajectory_zone.png" alt="Trajectory monitoring diagram (Figure 5.3)" width="350"/>
+<img src="docs/architecture/Tajectory_analysis.png" alt="Trajectory monitoring diagram (Figure 5.3)" width="500"/>
 
 > *Figure 5.3 (thesis): the 1 m buffered trajectory corridor with the 3 m interaction zone highlighted in yellow.*
 
@@ -167,7 +182,7 @@ The `trajectory_watcher` node fuses three inputs — the global Nav2 plan, 3D de
 
 ## Stage 3 — Custom Navigate-to-Pose Behavior Tree
 
-<img src="docs/bt_subtree.png" alt="HandleHumanPause subtree (Figure 5.5)" width="600"/>
+<img src="docs/behavior_tree/HandelHumanpause.png" alt="HandleHumanPause subtree (Figure 5.5)" width="700"/>
 
 > *Figure 5.5 (thesis): Groot2 visualisation of the `HandleHumanPause` ReactiveFallback subtree.*
 
@@ -275,12 +290,16 @@ Experiments were conducted in the Sphaira Medical GmbH office building across **
 
 <table>
 <tr>
-<td><img src="docs/route_a_s1_camera.jpg" width="300"/></td>
-<td><img src="docs/route_a_s1_topdown.png" width="200"/></td>
+<td><img src="docs/evaluation/a1.png" width="300" alt="Route A Scenario 1"/></td>
+<td><img src="docs/evaluation/a2.png" width="300" alt="Route A Scenario 2"/></td>
+</tr>
+<tr>
+<td><img src="docs/evaluation/Route_A1.drawio.png" width="200" alt="Route A1 top-down"/></td>
+<td><img src="docs/evaluation/Route_A2.drawio.png" width="200" alt="Route A2 top-down"/></td>
 </tr>
 </table>
 
-> *Figure 6.1 (thesis): Route A, Scenario 1 — pedestrian crossing diagonally.*
+> *Figures 6.1–6.2 (thesis): Route A scenarios — camera views (top) and top-down route diagrams (bottom).*
 
 | Scenario | Situation | LLM Action | Speech | Latency |
 |---|---|---|---|---|
@@ -291,8 +310,12 @@ Experiments were conducted in the Sphaira Medical GmbH office building across **
 
 <table>
 <tr>
-<td><img src="docs/route_b_s1_camera.jpg" width="300"/></td>
-<td><img src="docs/route_b_s2_camera.jpg" width="300"/></td>
+<td><img src="docs/evaluation/b1.png" width="300" alt="Route B Scenario 1"/></td>
+<td><img src="docs/evaluation/b2.png" width="300" alt="Route B Scenario 2"/></td>
+</tr>
+<tr>
+<td><img src="docs/evaluation/Route_B1.drawio.png" width="200" alt="Route B1 top-down"/></td>
+<td><img src="docs/evaluation/Route_B2.drawio.png" width="200" alt="Route B2 top-down"/></td>
 </tr>
 </table>
 
@@ -307,12 +330,18 @@ Experiments were conducted in the Sphaira Medical GmbH office building across **
 
 <table>
 <tr>
-<td><img src="docs/route_c_s1_camera.jpg" width="300"/></td>
-<td><img src="docs/route_c_s3_camera.jpg" width="300"/></td>
+<td><img src="docs/evaluation/c1.png" width="200" alt="Route C Scenario 1"/></td>
+<td><img src="docs/evaluation/c2.png" width="200" alt="Route C Scenario 2"/></td>
+<td><img src="docs/evaluation/c3.png" width="200" alt="Route C Scenario 3"/></td>
+</tr>
+<tr>
+<td><img src="docs/evaluation/Route_C1.drawio.png" width="200" alt="Route C1 top-down"/></td>
+<td><img src="docs/evaluation/Route_C2.jpg" width="200" alt="Route C2 top-down"/></td>
+<td><img src="docs/evaluation/Route_c3.jpeg" width="200" alt="Route C3 top-down"/></td>
 </tr>
 </table>
 
-> *Figures 6.5, 6.7 (thesis): Route C — pedestrian crossing from the left (left) and moving away from the right (right).*
+> *Figures 6.5–6.7 (thesis): Route C — pedestrian crossing from the left, stationary at junction, and moving away right-to-left.*
 
 | Scenario | Situation | LLM Action | Speech | Latency |
 |---|---|---|---|---|
@@ -327,26 +356,29 @@ The system consistently produced socially appropriate, interpretable responses. 
 ## Repository Structure
 
 ```
-A1/src/
-├── sphaira_obstacle_detection_and_tracking/
-│   └── deep_sort_tracker/          # YOLOv8n + DeepSORT ROS 2 node
-├── trajectory_watcher/             # Interaction zone monitor
-│   └── trajectory_watcher/
-├── ros_llm/                        # ROS-LLM framework (Groq Scout 17B)
-│   ├── llm_model/                  # scene_understanding_service.py
-│   ├── llm_config/                 # user_config.py, API credentials
-│   ├── llm_input/                  # speech-to-text (optional)
-│   └── llm_output/                 # text-to-speech (optional)
-├── bt_plugins/
-│   └── src/is_human_detected.cpp   # Custom BT::ConditionNode
-├── sphaira_ros_configs/
-│   ├── a1_robot_bringup_package/   # Master launch (AMCL & Bosch variants)
-│   ├── collision_monitor_package/
-│   ├── robot_localization_package/ # EKF fusion
-│   ├── rf2o_laser_odometry/
-│   ├── bosch_locator_bridge_sphaira/
-│   └── realsense_ros_package/
-└── navigate_to_pose_llm.xml        # Pedestrian-aware BT definition
+moby-scene-navigation/
+├── README.md
+├── navigate_to_pose_llm.xml              # Pedestrian-aware BT definition
+├── docs/
+│   ├── robot/                            # MOBY platform photos
+│   ├── architecture/                     # Pipeline and data flow diagrams
+│   ├── behavior_tree/                    # BT Groot2 visualisation
+│   ├── tracker/                          # Tracker visualisation
+│   ├── evaluation/                       # Route maps and scenario screenshots
+│   └── dataset/                          # Sample frames from MOBY dataset
+└── src/
+    ├── bt_plugins/
+    │   └── src/is_human_detected.cpp     # Custom BT::ConditionNode
+    ├── trajectory_watcher/               # Interaction zone monitor
+    ├── ultralytics_ros/                  # YOLOv8n tracker + depth 2D→3D node
+    ├── deep_sort_tracker/                # DeepSORT ROS 2 wrapper
+    ├── human_3d_locator/                 # RealSense depth ROI deprojection
+    ├── ros_llm/                          # LLM scene understanding service
+    │   ├── llm_model/                    # scene_understanding_service.py
+    │   ├── llm_config/                   # API config
+    │   ├── llm_input/                    # speech-to-text (optional)
+    │   └── llm_output/                   # text-to-speech (optional)
+    └── mot17_publisher/                  # MOT17 GT publisher for tracker eval
 ```
 
 ---
