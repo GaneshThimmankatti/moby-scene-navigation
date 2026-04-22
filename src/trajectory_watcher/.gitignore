@@ -1,0 +1,19 @@
+# Build artifacts
+build/
+install/
+log/
+
+# Python compiled files
+*.pyc
+__pycache__/
+
+# ROS2 workspace files
+*.rosinstall
+*.rqt
+
+# VSCode settings
+.vscode/
+
+# Other temporary files
+*.swp
+*~

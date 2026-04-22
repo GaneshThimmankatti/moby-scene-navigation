@@ -1,0 +1,26 @@
+<package format="3">
+  <name>bt_plugins</name>
+  <version>0.1.0</version>
+  <description>Custom BehaviorTree.CPP plugin for human detection</description>
+
+  <maintainer email="your@email.com">Your Name</maintainer>
+  <license>Apache-2.0</license>
+
+  <buildtool_depend>ament_cmake</buildtool_depend>
+
+  <build_depend>rclcpp</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>pluginlib</build_depend>
+  <build_depend>behaviortree_cpp_v3</build_depend>
+  <build_depend>ament_index_cpp</build_depend>
+
+  <exec_depend>rclcpp</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>pluginlib</exec_depend>
+  <exec_depend>behaviortree_cpp_v3</exec_depend>
+  <exec_depend>ament_index_cpp</exec_depend>
+
+  <export>
+    <pluginlib plugin="${prefix}/bt_plugins.xml"/>
+  </export>
+</package>

@@ -1,0 +1,46 @@
+# ROS 2 build artifacts
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.eggs/
+dist/
+*.so
+
+# C++ build
+*.o
+*.a
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+Makefile
+
+# Model weights (large binary files — download separately)
+*.pt
+*.pth
+*.onnx
+*.engine
+*.weights
+
+# DeepSORT checkpoint (large binary)
+src/deep_sort_tracker/deep_sort_tracker/deep_sort_pytorch/deep_sort/deep/checkpoint/ckpt.t7
+
+# Rosbags
+*.bag
+*.db3
+ros2bag/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log

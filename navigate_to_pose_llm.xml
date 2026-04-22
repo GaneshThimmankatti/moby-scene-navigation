@@ -1,0 +1,62 @@
+<root main_tree_to_execute="MainTree">
+  <BehaviorTree ID="MainTree">
+    <PipelineSequence name="MainLoop">
+
+      <!-- 1) Controller & Planner selectors -->
+      <ControllerSelector
+        selected_controller="{selected_controller}"
+        default_controller="FollowPath"
+        topic_name="controller_selector"/>
+      <PlannerSelector
+        selected_planner="{selected_planner}"
+        default_planner="GridBased"
+        topic_name="planner_selector"/>
+
+      <!-- 2) Initial plan once -->
+      <SingleTrigger name="InitialPlan">
+        <ComputePathToPose
+          goal="{goal}"
+          path="{path}"
+          planner_id="GridBased"/>
+      </SingleTrigger>
+
+      <!-- 3) Human‑pause → clear & replan (never halted) -->
+      <ReactiveFallback name="HandleHumanPause">
+        <Sequence name="OnHumanDetected">
+          <IsHumanDetected/>
+          <CallLLMService
+            service_name="run_llm"
+            action="{llm_action}"
+            speech="{llm_speech}"/>
+          <CancelControl/>
+          <Inverter><IsHumanDetected/></Inverter>
+          <ClearEntireCostmap
+            service_name="global_costmap/clear_entirely_global_costmap"/>
+          <!-- This decorator will keep re‑ticking ComputePathToPose
+               until it returns SUCCESS, so BT.CPP never halts it. -->
+          <RetryUntilSuccessful num_attempts="3">
+            <ComputePathToPose
+              goal="{goal}"
+              path="{path}"
+              planner_id="GridBased"/>
+          </RetryUntilSuccessful>
+        </Sequence>
+        <AlwaysSuccess/>
+      </ReactiveFallback>
+
+      <!-- 4) Follow & only finish when GoalReached confirms arrival -->
+      <!-- Wrapped so FollowPath never gets halted mid‑drive -->
+      <RetryUntilSuccessful num_attempts="99">
+        <Sequence name="FollowUntilDone">
+          <FollowPath
+            path="{path}"
+            controller_id="{selected_controller}"/>
+          <GoalReached
+            goal="{goal}"
+            robot_base_frame="base_link"/>
+        </Sequence>
+      </RetryUntilSuccessful>
+
+    </PipelineSequence>
+  </BehaviorTree>
+</root>

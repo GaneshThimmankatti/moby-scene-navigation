@@ -1,0 +1,5 @@
+<library path="bt_human_nodes">
+  <class name="IsHumanDetected"
+         type="bt_plugins::IsHumanDetected"
+         base_class_type="BT::ConditionNode"/>
+</library>

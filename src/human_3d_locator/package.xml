@@ -1,0 +1,32 @@
+<?xml version="1.0"?>
+<?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
+<package format="3">
+  <name>human_3d_locator</name>
+  <version>0.1.0</version>
+  <description>
+    ROS 2 node that lifts YOLO 2D detections to 3D using depth image ROI projection.
+    For each detection bounding box the median depth is computed from the aligned depth
+    image ROI and the centre pixel is de-projected using RealSense intrinsics to produce
+    a Detection3DArray on /detection_3d_array.
+  </description>
+
+  <maintainer email="ganesh@sphaira.com">Ganesh Thimmankatti</maintainer>
+  <license>Sphaira Inc.</license>
+
+  <buildtool_depend>setuptools</buildtool_depend>
+
+  <depend>rclpy</depend>
+  <depend>sensor_msgs</depend>
+  <depend>vision_msgs</depend>
+  <depend>visualization_msgs</depend>
+  <depend>geometry_msgs</depend>
+  <depend>cv_bridge</depend>
+  <depend>tf2_ros</depend>
+  <depend>tf2_geometry_msgs</depend>
+  <depend>message_filters</depend>
+  <depend>ultralytics_ros</depend>
+
+  <export>
+    <build_type>ament_python</build_type>
+  </export>
+</package>

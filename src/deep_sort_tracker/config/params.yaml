@@ -1,0 +1,15 @@
+deep_sort_tracker:
+  ros__parameters:
+    model_path: '/opt/sphaira/models/ml/ckpt.t7'      # On the development computers / logins these files are stored in the /opt/sphaira/models/ml/
+    max_dist: 0.4
+    max_iou_distance: 0.3
+    max_age: 30
+    n_init: 5
+    nn_budget: 200
+    time_interval: 0.1  # 1/30 seconds (30 FPS)
+    output_file_path: 'output/file/path'
+
+    # Topics
+    detection_topic: '/yolo_result'
+    image_topic: '/camera/camera/color/image_raw'
+    tracked_objects_topic: '/tracked_objects'
